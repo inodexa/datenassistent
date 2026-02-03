@@ -254,6 +254,17 @@ hashdeep -r -l -k manifest_source.sha256 -a .
 
 **Empfehlung:** Immer `Full` oder `Forensic` für finale Verifikation.
 
+### 4.4 Stichproben-Verifikation (Pragmatischer Zwischencheck)
+
+**Ziel:** Schneller Qualitätsindikator zwischen zwei Voll-Audits.
+
+```bash
+# 2% Stichprobe gegen vorhandenes Manifest
+bash scripts/verify.sh --sample 2 /pfad/zum/manifest.sha256 /ziel/_IMPORT_RAW/disk01
+```
+
+**Wichtig:** Stichproben ersetzen **keine** finale Forensik. Sie dienen nur als Zwischencheck.
+
 ---
 
 ## 5. macOS-Spezifika
