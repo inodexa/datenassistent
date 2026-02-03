@@ -68,6 +68,12 @@ bash scripts/migrate.sh /path/to/source /path/to/destination
 bash scripts/verify.sh /path/to/manifest.sha256 /path/to/destination
 ```
 
+**Hinweis (macOS/APFS unter Linux):** APFS-Mounts haben oft UID/GID-Mapping-Probleme.
+Nutze ggf. `sudo` und/oder `apfs-fuse -o uid=...,gid=...`.
+
+**Hinweis (SMB-Performance, macOS):** `signing_required=no` und `dir_cache_off=yes`
+in `/etc/nsmb.conf` können Transfers deutlich beschleunigen. Audit bleibt Pflicht.
+
 ## Dokumentation
 
 - [Wissensbasis](docs/WISSENSBASIS.md) - Konsolidiertes Expertenwissen

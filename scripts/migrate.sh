@@ -99,6 +99,16 @@ log "Projekt:    $PROJECT_DIR"
 log "Log:        $LOG"
 echo ""
 
+# SMB-Performance Hinweis (macOS)
+if [[ -f /etc/nsmb.conf ]]; then
+    if ! grep -Eq 'signing_required\s*=\s*no' /etc/nsmb.conf; then
+        warn "SMB: signing_required=no fehlt in /etc/nsmb.conf (macOS Performance)"
+    fi
+    if ! grep -Eq 'dir_cache_off\s*=\s*yes' /etc/nsmb.conf; then
+        warn "SMB: dir_cache_off=yes fehlt in /etc/nsmb.conf (macOS Performance)"
+    fi
+fi
+
 # Quell-Statistik
 SOURCE_SIZE=$(du -sh "$SOURCE" 2>/dev/null | cut -f1 || echo "unbekannt")
 SOURCE_FILES=$(find "$SOURCE" -type f 2>/dev/null | wc -l || echo "unbekannt")
