@@ -66,6 +66,9 @@ bash scripts/migrate.sh /path/to/source /path/to/destination
 
 # Verifikation prüfen
 bash scripts/verify.sh /path/to/manifest.sha256 /path/to/destination disk01
+
+# Optionaler Sample-Check (schneller Zwischencheck)
+bash scripts/verify.sh --sample 2 /path/to/manifest.sha256 /path/to/destination disk01
 ```
 
 **Hinweis (macOS/APFS unter Linux):** APFS-Mounts haben oft UID/GID-Mapping-Probleme.

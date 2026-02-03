@@ -126,10 +126,18 @@ cd "$DEST"
 hashdeep -r -l -k "$MANIFEST_TO_USE" -a . | tee "$AUDIT_LOG" "$AUDIT_LOG_FILE" >/dev/null || true
 
 if grep -q "Audit passed" "$AUDIT_LOG"; then
-    ok "Forensische Verifikation bestanden"
+    if [[ -n "$SAMPLE_PERCENT" ]]; then
+        ok "Stichprobe bestanden"
+    else
+        ok "Forensische Verifikation bestanden"
+    fi
     exit 0
 fi
 
-err "Verifikation fehlgeschlagen"
+if [[ -n "$SAMPLE_PERCENT" ]]; then
+    err "Stichprobe fehlgeschlagen"
+else
+    err "Verifikation fehlgeschlagen"
+fi
 grep -E "(No match|Moved|not found|Modified)" "$AUDIT_LOG" || true
 exit 1
