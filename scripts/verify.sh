@@ -9,6 +9,8 @@ set -euo pipefail
 
 MANIFEST="${1:-}"
 DEST="${2:-}"
+PROJECT_DIR="${MIGRATION_PROJECT:-$(dirname "$DEST")/_MIGRATION_PROJECT}"
+TIMESTAMP=$(date '+%Y-%m-%d_%H%M%S')
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -21,14 +23,17 @@ err() { echo -e "${RED}[ERROR]${NC} $(date '+%H:%M:%S') $*" >&2; }
 
 usage() {
     cat << EOF
-Verwendung: $(basename "$0") <manifest.sha256> <ziel>
+Verwendung: $(basename "$0") <manifest.sha256> <ziel> [disk_label]
 
 Argumente:
   manifest.sha256   hashdeep-Manifest (mit -l erzeugt)
   ziel              Zielverzeichnis, das geprüft wird
+  disk_label        Optionaler Name für Logs (Default: audit_YYYYMMDD)
 EOF
     exit 1
 }
+
+DISK_LABEL="${3:-audit_$(date +%Y%m%d)}"
 
 [[ -z "$MANIFEST" || -z "$DEST" ]] && usage
 [[ -f "$MANIFEST" ]] || { err "Manifest nicht gefunden: $MANIFEST"; exit 1; }
@@ -40,14 +45,18 @@ if ! command -v hashdeep &>/dev/null; then
     exit 1
 fi
 
+mkdir -p "$PROJECT_DIR"/logs
+AUDIT_LOG_FILE="$PROJECT_DIR/logs/${TIMESTAMP}_${DISK_LABEL}_audit.log"
+
 log "Manifest: $MANIFEST"
 log "Ziel:     $DEST"
+log "Audit:    $AUDIT_LOG_FILE"
 
 AUDIT_LOG="$(mktemp -t hashdeep_audit.XXXXXX)"
 trap 'rm -f "$AUDIT_LOG"' EXIT
 
 cd "$DEST"
-hashdeep -r -l -k "$MANIFEST" -a . | tee "$AUDIT_LOG" >/dev/null || true
+hashdeep -r -l -k "$MANIFEST" -a . | tee "$AUDIT_LOG" "$AUDIT_LOG_FILE" >/dev/null || true
 
 if grep -q "Audit passed" "$AUDIT_LOG"; then
     ok "Forensische Verifikation bestanden"

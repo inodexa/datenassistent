@@ -104,3 +104,18 @@ exiftool -json -r /ziel/_IMPORT_RAW > metadata.json
 - Umstrukturieren
 - Dateinamen normalisieren
 - Duplikate entfernen (niemals automatisch)
+
+---
+
+## 8. Fehlerbehandlung & Resume
+
+**Grundprinzip:**
+- Logs prüfen (rsync + hashdeep)
+- Bei Abbruch: gleiches Kommando erneut starten
+
+```bash
+# Resume bei Abbruch
+rsync -avhP --checksum /quelle/ /ziel/
+```
+
+**Hinweis:** `-P` sorgt für Resume-fähige Teiltransfers.
