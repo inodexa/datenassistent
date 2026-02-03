@@ -130,3 +130,12 @@ rsync -avhP --checksum /quelle/ /ziel/
 - `_MIGRATION_PROJECT/metadata/` → xattrs/Metadaten-Exports
 
 **Empfehlung:** Logs und Manifeste gemeinsam mit dem Ziel archivieren.
+
+---
+
+## 10. Sample-Check zwischen großen Läufen
+
+```bash
+# Schneller Zwischencheck (z.B. nach SMB-Wiederverbindung)
+bash scripts/verify.sh --sample 2 /pfad/zum/manifest.sha256 /ziel/_IMPORT_RAW/disk01
+```
