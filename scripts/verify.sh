@@ -29,6 +29,9 @@ Argumente:
   manifest.sha256   hashdeep-Manifest (mit -l erzeugt)
   ziel              Zielverzeichnis, das geprüft wird
   disk_label        Optionaler Name für Logs (Default: audit_YYYYMMDD)
+
+Hinweis:
+  Dry-Run: hashdeep hat keinen Dry-Run; nutze stattdessen eine Stichprobe.
 EOF
     exit 1
 }

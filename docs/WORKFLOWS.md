@@ -119,3 +119,14 @@ rsync -avhP --checksum /quelle/ /ziel/
 ```
 
 **Hinweis:** `-P` sorgt für Resume-fähige Teiltransfers.
+
+---
+
+## 9. Logging & Artefakte
+
+**Standardpfade:**
+- `_MIGRATION_PROJECT/manifests/` → Quell-Manifest(e)
+- `_MIGRATION_PROJECT/logs/` → rsync + Audit + Summary
+- `_MIGRATION_PROJECT/metadata/` → xattrs/Metadaten-Exports
+
+**Empfehlung:** Logs und Manifeste gemeinsam mit dem Ziel archivieren.
