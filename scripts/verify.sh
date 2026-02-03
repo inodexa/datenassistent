@@ -3,7 +3,7 @@
 # verify.sh - Forensische Verifikation gegen ein hashdeep-Manifest
 #
 # Verwendung:
-#   bash verify.sh [--sample <percent>] /pfad/zu/manifest.sha256 /pfad/zum/ziel [disk_label]
+#   bash verify.sh [--sample <percent>] [--log-only] /pfad/zu/manifest.sha256 /pfad/zum/ziel [disk_label]
 #
 set -euo pipefail
 
@@ -33,6 +33,7 @@ Argumente:
 
 Hinweis:
   Dry-Run: hashdeep hat keinen Dry-Run; nutze stattdessen --sample.
+  Log-Only: --log-only schreibt nur Logs, keine Konsolen-Ausgabe.
 EOF
     exit 1
 }
@@ -43,6 +44,10 @@ while [[ $# -gt 0 ]]; do
             SAMPLE_PERCENT="${2:-}"
             shift 2
             ;;
+        --log-only)
+            LOG_ONLY=1
+            shift 1
+            ;;
         -h|--help)
             usage
             ;;
@@ -52,6 +57,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+LOG_ONLY=${LOG_ONLY:-0}
 MANIFEST="${1:-}"
 DEST="${2:-}"
 DISK_LABEL="${3:-audit_$(date +%Y%m%d)}"
@@ -123,9 +129,17 @@ if [[ -n "$SAMPLE_PERCENT" ]]; then
 fi
 
 cd "$DEST"
-hashdeep -r -l -k "$MANIFEST_TO_USE" -a . | tee "$AUDIT_LOG" "$AUDIT_LOG_FILE" >/dev/null || true
+if (( LOG_ONLY )); then
+    hashdeep -r -l -k "$MANIFEST_TO_USE" -a . > "$AUDIT_LOG_FILE" 2>&1 || true
+    cp "$AUDIT_LOG_FILE" "$AUDIT_LOG" >/dev/null 2>&1 || true
+else
+    hashdeep -r -l -k "$MANIFEST_TO_USE" -a . | tee "$AUDIT_LOG" "$AUDIT_LOG_FILE" >/dev/null || true
+fi
 
 if grep -q "Audit passed" "$AUDIT_LOG"; then
+    if (( LOG_ONLY )); then
+        exit 0
+    fi
     if [[ -n "$SAMPLE_PERCENT" ]]; then
         ok "Stichprobe bestanden"
     else
@@ -135,8 +149,14 @@ if grep -q "Audit passed" "$AUDIT_LOG"; then
 fi
 
 if [[ -n "$SAMPLE_PERCENT" ]]; then
+    if (( LOG_ONLY )); then
+        exit 1
+    fi
     err "Stichprobe fehlgeschlagen"
 else
+    if (( LOG_ONLY )); then
+        exit 1
+    fi
     err "Verifikation fehlgeschlagen"
 fi
 grep -E "(No match|Moved|not found|Modified)" "$AUDIT_LOG" || true

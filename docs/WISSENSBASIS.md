@@ -265,6 +265,11 @@ bash scripts/verify.sh --sample 2 /pfad/zum/manifest.sha256 /ziel/_IMPORT_RAW/di
 
 **Wichtig:** Stichproben ersetzen **keine** finale Forensik. Sie dienen nur als Zwischencheck.
 
+**Grenzen/Risiken:**
+- Ein positives Sample ist **keine** Vollgarantie für Integrität.
+- Korrelationen (z.B. defekte Sektoren-Cluster) können unentdeckt bleiben.
+- Verwende Sample-Checks nur als Zwischenstand, nicht als Abschluss.
+
 ---
 
 ## 5. macOS-Spezifika
