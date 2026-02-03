@@ -30,6 +30,21 @@ bash scripts/verify.sh /pfad/zum/manifest.sha256 /ziel/_IMPORT_RAW/disk01
 
 ---
 
+## 2.1 Preflight-Checks (vor jeder Migration)
+
+```bash
+# Quelle erreichbar?
+[[ -d /quelle ]] && echo "Quelle OK"
+
+# Ziel gemountet?
+mountpoint -q /ziel && echo "Ziel gemountet"
+
+# Tools vorhanden?
+command -v hashdeep rsync >/dev/null && echo "Tools OK"
+```
+
+---
+
 ## 3. macOS/APFS-Quelle (typisch unter Linux)
 
 **Ziel:** APFS-Volumes sind unter Linux oft mit UID-Mapping-Problemen gemountet.
@@ -63,7 +78,7 @@ dir_cache_off=yes
 
 ---
 
-## 3. Deduplizierung (Analyse-only)
+## 5. Deduplizierung (Analyse-only)
 
 **Ziel:** Duplikate finden, ohne Dateien zu verändern.
 
@@ -74,7 +89,7 @@ fclones group /ziel/_IMPORT_RAW --min 1M -f json > duplicates.json
 
 ---
 
-## 5. Metadaten-Export (vor Normalisierung)
+## 6. Metadaten-Export (vor Normalisierung)
 
 ```bash
 exiftool -csv -r /ziel/_IMPORT_RAW > metadata.csv
@@ -83,7 +98,7 @@ exiftool -json -r /ziel/_IMPORT_RAW > metadata.json
 
 ---
 
-## 6. Nacharbeit (manuell, bewusst)
+## 7. Nacharbeit (manuell, bewusst)
 
 **Nur nach erfolgreicher Verifikation:**
 - Umstrukturieren

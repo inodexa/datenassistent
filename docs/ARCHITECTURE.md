@@ -164,6 +164,9 @@ Output: manifest_source.sha256
 └─────────────────────────────────────────────────────────────┘
 ```
 
+**Implementierungsbezug:**
+- `scripts/migrate.sh` (End-to-End Migration mit rsync + hashdeep)
+
 ### 4. Audit-Verifikator
 
 **Verantwortlichkeit:** Forensische Verifikation nach Transfer.
@@ -201,6 +204,9 @@ Output: manifest_source.sha256
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+**Implementierungsbezug:**
+- `scripts/verify.sh` (Audit-only Verifikation gegen Manifest)
 
 ### 5. Duplikat-Analysator
 
