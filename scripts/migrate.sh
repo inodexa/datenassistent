@@ -45,7 +45,7 @@ Argumente:
   disk_label  Optionaler Name für Manifest/Logs (Default: disk_YYYYMMDD)
 
 Hinweis:
-  Dry-Run: rsync unterstützt `--dry-run` (manuell im Script ergänzen).
+  Dry-Run: rsync unterstützt '--dry-run' (manuell im Script ergänzen).
 
 Beispiel:
   $(basename "$0") /run/media/user/USB /mnt/nas/_IMPORT_RAW/usb disk01_backup
