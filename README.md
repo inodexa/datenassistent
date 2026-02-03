@@ -65,7 +65,7 @@ nix-shell -p hashdeep fclones exiftool
 bash scripts/migrate.sh /path/to/source /path/to/destination
 
 # Verifikation prüfen
-bash scripts/verify.sh /path/to/manifest.sha256 /path/to/destination
+bash scripts/verify.sh /path/to/manifest.sha256 /path/to/destination disk01
 ```
 
 **Hinweis (macOS/APFS unter Linux):** APFS-Mounts haben oft UID/GID-Mapping-Probleme.

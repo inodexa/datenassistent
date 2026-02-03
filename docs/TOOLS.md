@@ -22,7 +22,7 @@
 | Script | Zweck | Eingaben |
 |--------|------|----------|
 | `scripts/migrate.sh` | End-to-End Migration (Manifest → Transfer → Audit) | `<quelle> <ziel> [disk_label]` |
-| `scripts/verify.sh` | Audit-only Verifikation gegen Manifest | `<manifest.sha256> <ziel>` |
+| `scripts/verify.sh` | Audit-only Verifikation gegen Manifest | `<manifest.sha256> <ziel> [disk_label]` |
 
 ## hashdeep
 
