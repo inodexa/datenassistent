@@ -112,9 +112,13 @@ XATTR_FILE="$PROJECT_DIR/metadata/${DISK_LABEL}_xattrs.txt"
 if command -v getfattr &>/dev/null; then
     getfattr -R -d -m - "$SOURCE" > "$XATTR_FILE" 2>/dev/null || true
     XATTR_COUNT=$(grep -c "^# file:" "$XATTR_FILE" 2>/dev/null || echo "0")
-    log "xattrs dokumentiert: $XATTR_COUNT Einträge"
+    log "xattrs dokumentiert (Linux/getfattr): $XATTR_COUNT Einträge"
+elif command -v xattr &>/dev/null; then
+    find "$SOURCE" -exec xattr -l {} \; 2>/dev/null > "$XATTR_FILE" || true
+    XATTR_COUNT=$(grep -c "^\\S" "$XATTR_FILE" 2>/dev/null || echo "0")
+    log "xattrs dokumentiert (macOS/xattr): $XATTR_COUNT Zeilen"
 else
-    warn "getfattr nicht verfügbar - überspringe xattr-Dokumentation"
+    warn "xattr/getfattr nicht verfügbar - überspringe xattr-Dokumentation"
     touch "$XATTR_FILE"
 fi
 echo ""

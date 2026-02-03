@@ -3,7 +3,7 @@
 > Wissenschaftlich fundiertes Framework für integritätserhaltende Datenmigration und -verwaltung
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.11+-green.svg)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.13+-green.svg)](https://python.org)
 
 ## Überblick
 

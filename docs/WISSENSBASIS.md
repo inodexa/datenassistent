@@ -85,7 +85,7 @@ hashdeep -r -l -k manifest.sha256 -a /ziel
 | Flag | Bedeutung |
 |------|-----------|
 | `-r` | Rekursiv |
-| `-l` | Vollständige Pfade anzeigen |
+| `-l` | Relative Pfade im Manifest |
 | `-c sha256` | SHA-256 verwenden |
 | `-k manifest` | Gegen Manifest prüfen |
 | `-a` | Audit-Modus (streng) |

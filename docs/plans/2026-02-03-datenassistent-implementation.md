@@ -1,7 +1,5 @@
 # Datenassistent Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
-
 **Goal:** Build a cross-platform TUI tool for integrity-preserving file copies with intelligent backend selection, multi-level verification, and detailed logging.
 
 **Architecture:** Layered design with TUI (textual) on top, core orchestration in the middle, and a backend abstraction layer wrapping rsync, rclone, and a native Python fallback. SQLite for logging, Pydantic for config, BLAKE3/SHA256 for verification.
@@ -34,7 +32,7 @@
 name = "datenassistent"
 version = "0.1.0"
 description = "Cross-platform TUI tool for integrity-preserving file copies"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "textual>=0.50",
     "blake3>=1.0",
@@ -65,11 +63,11 @@ testpaths = ["tests"]
 asyncio_mode = "auto"
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 line-length = 99
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 strict = true
 ```
 
