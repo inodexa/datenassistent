@@ -84,6 +84,19 @@ if ! command -v rsync &>/dev/null; then
     exit 1
 fi
 
+# Ziel-Mount prüfen (Best Effort)
+if command -v mountpoint &>/dev/null; then
+    if ! mountpoint -q "$(dirname "$DEST")"; then
+        warn "Ziel-Mountpoint nicht erkannt: $(dirname "$DEST")"
+    fi
+fi
+
+# Platz prüfen (Best Effort)
+if command -v df &>/dev/null; then
+    DEST_FREE=$(df -h "$(dirname "$DEST")" | awk 'NR==2 {print $4}')
+    log "Ziel frei: $DEST_FREE"
+fi
+
 # Verzeichnisse erstellen
 mkdir -p "$DEST"
 mkdir -p "$PROJECT_DIR"/{manifests,metadata,logs,reports}
