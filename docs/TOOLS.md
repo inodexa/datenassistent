@@ -447,6 +447,15 @@ hashdeep -r -l -k "/tmp/$MANIFEST" -a .
 echo "Audit bestanden!"
 ```
 
+### Verifikation als eigener Schritt (verify.sh)
+
+```bash
+# Audit-only gegen vorhandenes Manifest
+bash scripts/verify.sh /pfad/zum/manifest.sha256 /ziel/_IMPORT_RAW/disk01
+```
+
+**Hinweis:** Das Script erwartet ein Manifest, das mit `hashdeep -l` erzeugt wurde.
+
 ### Duplikat-Analyse und Bereinigung
 
 ```bash
